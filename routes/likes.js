@@ -10,9 +10,10 @@ router.get('/', function (req, res) {
 });
 
 router.post('/', function (req, res) {
-  console.log(req);
-  likes.req++;
-  console.log(likes);
+  var name = req.body.name;
+  console.log('var name:', name);
+  likes[name]++;
+  console.log('likes:', likes);
   res.sendStatus(200);
 });
 

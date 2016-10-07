@@ -17,22 +17,22 @@ $(function () {
     },
   });
   $('#container').on('click', 'button', function (){
+    var name = $(this).attr('class');
+    console.log('Name:', name);
     $.ajax({
       type: 'POST',
       url: '/likes',
-      data: $(this).attr('class'),
-      success: getLikes,
+      data: 'name=' + name,
+      success: function(responseObj) {
+        $.ajax({
+          type: 'GET',
+          url: '/likes',
+          success: function(responseObj) {
+            $('#' + name).text(responseObj[name]);
+          }
+        })
+      }
+,
     })
   })
 });
-
-function getLikes() {
-  $.ajax({
-    type: 'GET',
-    url: '/likes',
-    success: function(responseObj) {
-      var select = $(this).attr('class');
-      $('#' + select).text(responseObj.select);
-    }
-  })
-}
